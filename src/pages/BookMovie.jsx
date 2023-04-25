@@ -2,8 +2,7 @@
 import React, {useState} from "react";
 import {useEffect} from "react";
 
-// import {ToastContainer, toast} from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
+import toast, {Toaster} from "react-hot-toast";
 
 // my imports
 import {movies, slots, seats} from "../utils/movieData/BookMovieData";
@@ -19,11 +18,6 @@ const BookMovie = () => {
   const [selectedSeats, setSelectedSeats] = useState();
   const [selectedCount, setSelectedCount] = useState(0);
   const [totalData, setTotalData] = useState({});
-
-  // error states
-
-  const [bookMovieError, setBookMovieError] = useState();
-  const [getLastMovieError, setGetLastMovieError] = useState();
 
   // validation states
   const [isMovie, setIsMovie] = useState();
@@ -45,10 +39,10 @@ const BookMovie = () => {
         setGetlastMovieStatus("fullfilled");
       })
       .catch((error) => {
-        //if any error will accours then status will be rejected
-        setGetlastMovieStatus("rejected");
-        setBookMovieError(error);
-        alert(error);
+        //if any error will accours then error toast will be displaying
+        setGetlastMovieStatus("error");
+        toast.error("something went wrong");
+
         console.log(error);
       });
   };
@@ -104,15 +98,19 @@ const BookMovie = () => {
     })
       .then((response) => response.json())
       .then((json) => {
-        // status will be fullfilled after getting successfull response
+        // it will display a success toast after getting successfull response
+
+        toast.success(json.message);
         setBookMovieStatus("fullfilled");
-        fetchLastBooking();
         resetForm();
+
+        fetchLastBooking();
       })
       .catch((error) => {
-        // if any error will accours then status will be rejected
-        setBookMovieStatus("rejected");
-        setGetLastMovieError(error);
+        // if any error will accours then error taost will be dislaying
+        toast.error("something went wrong");
+        setBookMovieStatus(error);
+
         console.log(error);
       });
   };
@@ -151,12 +149,16 @@ const BookMovie = () => {
     // if all validation has sucessfull , then send data to api
     if (validation.isMovie && validation.isSlot && validation.isSeat) {
       sendData(totalData);
+
       localStorage.clear();
     }
   };
 
   return (
     <>
+      <div>
+        <Toaster />
+      </div>
       <div>
         <h2 className="main-title">Book that show !!</h2>
         <div className="main">
