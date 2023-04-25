@@ -45,8 +45,7 @@ module.exports = {
       template: "./src/index.html",
     }),
     new EnvironmentPlugin({
-      API_URI:
-        "https://book-my-show-capstone-server-deploy-2xfwpxxz5-vinaychaurasiya96.vercel.app/",
+      API_URI: "https://book-my-show-capstone-server-deploy.vercel.app",
     }),
   ],
   resolve: {
