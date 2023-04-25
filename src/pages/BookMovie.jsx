@@ -48,6 +48,7 @@ const BookMovie = () => {
         //if any error will accours then status will be rejected
         setGetlastMovieStatus("rejected");
         setBookMovieError(error);
+        alert(error);
         console.log(error);
       });
   };
@@ -59,8 +60,6 @@ const BookMovie = () => {
     setSelectedSeats();
     document.querySelectorAll("input").forEach((input) => (input.value = 0));
   };
-
-  //here persisting data after refresh page
 
   // here we are using useState hook (didMount) to display last booking details on every render
   useEffect(() => {
